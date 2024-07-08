@@ -36,6 +36,11 @@ export class AuthServiceConfig {
     dbUrl: z
       .string(required("Wholly database URL"))
       .min(7, minimum("Wholly database URL", 7)),
+    event: z.object({
+      USER_REGISTER: z.string().readonly(),
+      USER_LOGIN: z.string().readonly(),
+      USER_LOGOUT: z.string().readonly(),
+    } as const),
   });
 
   get(key?: never): ReturnType<typeof this.schema.parse>;
@@ -55,6 +60,11 @@ export class AuthServiceConfig {
         dbPass: process.env.WHOLLY_AUTH_SERVICE_DB_PASS,
         dbName: process.env.WHOLLY_AUTH_SERVICE_DB_NAME,
         dbUrl: `postgres://${process.env.WHOLLY_AUTH_SERVICE_DB_USER}:${process.env.WHOLLY_AUTH_SERVICE_DB_PASS}@${process.env.WHOLLY_AUTH_SERVICE_DB_HOST}:${process.env.WHOLLY_AUTH_SERVICE_DB_PORT}/${process.env.WHOLLY_AUTH_SERVICE_DB_NAME}`,
+        event: {
+          USER_REGISTER: "USER_REGISTER" as const,
+          USER_LOGIN: "USER_LOGIN" as const,
+          USER_LOGOUT: "USER_LOGOUT" as const,
+        } as const,
       });
 
       if (key) return env[key];

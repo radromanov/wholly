@@ -13,7 +13,8 @@
     "baseUrl": "./",
     "paths": {
       "@shared/*": ["../gateway/shared/*"],
-      "@core/*": ["core/*"]
+      "@core/*": ["core/*"],
+      "@api/*": ["api/*"]
     },
 
     "strict": true,

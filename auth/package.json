@@ -37,6 +37,7 @@
   },
   "_moduleAliases": {
     "@shared": "dist/gateway/shared",
-    "@core": "dist/auth/core"
+    "@core": "dist/auth/core",
+    "@api": "dist/auth/api"
   }
 }

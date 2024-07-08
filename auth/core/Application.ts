@@ -4,9 +4,15 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import { AuthServiceConfig } from "@shared/config";
+import { RegisterSchema } from "@shared/types";
+import { validate } from "@api/auth.middleware";
+import { AuthController } from "@api/auth.controller";
 
 export class Application {
-  constructor(private readonly app: Express) {}
+  constructor(
+    private readonly app: Express,
+    private readonly controller: AuthController
+  ) {}
 
   private setup() {
     this.app.use(cors()); // Enable CORS
@@ -20,7 +26,13 @@ export class Application {
   routes() {
     this.setup();
 
-    this.app.get("/", (_req, res) => res.json({ health: "very ok" }));
+    this.app
+      .get("/", (_req, res) => res.json({ health: "very ok" }))
+      .post(
+        "/register",
+        validate(RegisterSchema),
+        this.controller.handleRegister
+      );
 
     return this.app;
   }
