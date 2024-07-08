@@ -33,6 +33,7 @@
     "typescript": "^5.5.3"
   },
   "_moduleAliases": {
-    "@shared": "dist/shared"
+    "@shared": "dist/shared",
+    "@core": "dist/auth/core"
   }
 }
