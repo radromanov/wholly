@@ -1,34 +1,28 @@
 import "module-alias/register";
 
 import express from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
-import { GatewayServiceConfig } from "@shared/config";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+
+import proxy from "express-http-proxy";
+import { AuthServiceConfig, GatewayServiceConfig } from "@shared/config";
 
 const gatewayConfig = new GatewayServiceConfig();
 const { port, env } = gatewayConfig.get();
+const authConfig = new AuthServiceConfig();
+const authUrl = authConfig.get("url");
+
+const authService = proxy(authUrl);
 
 const app = express();
 
-const services = {
-  auth: "http://localhost:8001",
-  todos: "http://localhost:8002",
-};
+app.use(cors()); // Enable CORS
+app.use(helmet()); // Add security headers
+app.use(morgan("combined")); // Log HTTP requests
+app.disable("x-powered-by"); // Hide Express server information
 
-app.use("/", (req, res, next) => {
-  console.log("in gateway");
-  next();
-});
-
-Object.keys(services).forEach((service) => {
-  app.use(
-    `/api/${service}`,
-    createProxyMiddleware({
-      target: services[service as keyof typeof services],
-      changeOrigin: true,
-      pathRewrite: { [`^/api/${service}`]: `/${service}` },
-    })
-  );
-});
+app.use("/api/auth", authService);
 
 app.listen(port, () =>
   console.log(`API Gateway running on port ${port} in ${env} mode.`)
