@@ -1,5 +1,11 @@
+import "module-alias/register";
+
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
+import { GatewayServiceConfig } from "@shared/config";
+
+const gatewayConfig = new GatewayServiceConfig();
+const { port, env } = gatewayConfig.get();
 
 const app = express();
 
@@ -7,6 +13,11 @@ const services = {
   auth: "http://localhost:8001",
   todos: "http://localhost:8002",
 };
+
+app.use("/", (req, res, next) => {
+  console.log("in gateway");
+  next();
+});
 
 Object.keys(services).forEach((service) => {
   app.use(
@@ -19,4 +30,6 @@ Object.keys(services).forEach((service) => {
   );
 });
 
-app.listen(8000, () => console.log(`API Gateway running on port 8000`));
+app.listen(port, () =>
+  console.log(`API Gateway running on port ${port} in ${env} mode.`)
+);

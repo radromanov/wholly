@@ -12,7 +12,7 @@
 
     "baseUrl": "./",
     "paths": {
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["../shared/*"]
     },
 
     "strict": true,
@@ -20,8 +20,5 @@
     "skipLibCheck": true,
     "moduleResolution": "node16"
   },
-  "exclude": ["node_modules", "dist", "auth"],
-  "watchOptions": {
-    "excludeDirectories": ["node_modules", "dist", "auth"]
-  }
+  "exclude": ["node_modules", "dist"]
 }
