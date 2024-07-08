@@ -1,39 +1,41 @@
-import "@shared/utils/dotenv";
+import { minimum, required } from "@shared/utils";
 import z from "zod";
 
 export class AuthServiceConfig {
   private schema = z.object({
     host: z
-      .string({
-        required_error:
-          "'WHOLLY_AUTH_SERVICE_HOST' environment variable is required",
-      })
-      .min(
-        7,
-        "'WHOLLY_AUTH_SERVICE_HOST' environment variable must be at least 7 character(s)"
-      ),
+      .string(required("WHOLLY_AUTH_SERVICE_HOST"))
+      .min(7, minimum("WHOLLY_AUTH_SERVICE_HOST", 7)),
     port: z
-      .string({
-        required_error:
-          "'WHOLLY_AUTH_SERVICE_PORT' environment variable is required",
-      })
-      .min(
-        2,
-        "'WHOLLY_AUTH_SERVICE_PORT' environment variable must be at least 2 character(s)"
-      )
+      .string(required("WHOLLY_AUTH_SERVICE_PORT"))
+      .min(2, minimum("WHOLLY_AUTH_SERVICE_PORT", 2))
       .transform((val) => parseInt(val, 10)),
     url: z
-      .string({
-        required_error:
-          "'WHOLLY_AUTH_SERVICE_URL' environment variable is required",
-      })
-      .min(
-        7,
-        "'WHOLLY_AUTH_SERVICE_URL' environment variable must be at least 7 character(s)"
-      ),
-    env: z.enum(["development", "production", "staging", "testing"], {
-      required_error: "'NODE_ENV' environment variable is required",
-    }),
+      .string(required("WHOLLY_AUTH_SERVICE_URL"))
+      .min(7, minimum("WHOLLY_AUTH_SERVICE_URL", 7)),
+    env: z.enum(
+      ["development", "production", "staging", "testing"],
+      required("NODE_ENV")
+    ),
+    dbHost: z
+      .string(required("WHOLLY_AUTH_SERVICE_DB_HOST"))
+      .min(1, minimum("WHOLLY_AUTH_SERVICE_DB_HOST")),
+    dbPort: z
+      .string(required("WHOLLY_AUTH_SERVICE_DB_PORT"))
+      .min(2, minimum("WHOLLY_AUTH_SERVICE_DB_PORT", 2))
+      .transform((val) => parseInt(val, 10)),
+    dbUser: z
+      .string(required("WHOLLY_AUTH_SERVICE_DB_USER"))
+      .min(1, minimum("WHOLLY_AUTH_SERVICE_DB_USER")),
+    dbPass: z
+      .string(required("WHOLLY_AUTH_SERVICE_DB_PASS"))
+      .min(1, minimum("WHOLLY_AUTH_SERVICE_DB_PASS")),
+    dbName: z
+      .string(required("WHOLLY_AUTH_SERVICE_DB_NAME"))
+      .min(1, minimum("WHOLLY_AUTH_SERVICE_DB_NAME")),
+    dbUrl: z
+      .string(required("Wholly database URL"))
+      .min(7, minimum("Wholly database URL", 7)),
   });
 
   get(key?: never): ReturnType<typeof this.schema.parse>;
@@ -47,6 +49,12 @@ export class AuthServiceConfig {
         port: process.env.WHOLLY_AUTH_SERVICE_PORT,
         url: process.env.WHOLLY_AUTH_SERVICE_URL,
         env: process.env.NODE_ENV,
+        dbHost: process.env.WHOLLY_AUTH_SERVICE_DB_HOST,
+        dbPort: process.env.WHOLLY_AUTH_SERVICE_DB_PORT,
+        dbUser: process.env.WHOLLY_AUTH_SERVICE_DB_USER,
+        dbPass: process.env.WHOLLY_AUTH_SERVICE_DB_PASS,
+        dbName: process.env.WHOLLY_AUTH_SERVICE_DB_NAME,
+        dbUrl: `postgres://${process.env.WHOLLY_AUTH_SERVICE_DB_USER}:${process.env.WHOLLY_AUTH_SERVICE_DB_PASS}@${process.env.WHOLLY_AUTH_SERVICE_DB_HOST}:${process.env.WHOLLY_AUTH_SERVICE_DB_PORT}/${process.env.WHOLLY_AUTH_SERVICE_DB_NAME}`,
       });
 
       if (key) return env[key];

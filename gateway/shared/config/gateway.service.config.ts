@@ -1,38 +1,22 @@
-import "@shared/utils/dotenv";
+import { minimum, required } from "@shared/utils";
 import z from "zod";
 
 export class GatewayServiceConfig {
   private schema = z.object({
     host: z
-      .string({
-        required_error:
-          "'WHOLLY_GATEWAY_HOST' environment variable is required",
-      })
-      .min(
-        7,
-        "'WHOLLY_GATEWAY_HOST' environment variable must be at least 7 character(s)"
-      ),
+      .string(required("WHOLLY_GATEWAY_HOST"))
+      .min(7, minimum("WHOLLY_GATEWAY_HOST", 7)),
     port: z
-      .string({
-        required_error:
-          "'WHOLLY_GATEWAY_PORT' environment variable is required",
-      })
-      .min(
-        2,
-        "'WHOLLY_GATEWAY_PORT' environment variable must be at least 2 character(s)"
-      )
+      .string(required("WHOLLY_GATEWAY_PORT"))
+      .min(2, minimum("WHOLLY_GATEWAY_PORT", 2))
       .transform((val) => parseInt(val, 10)),
     url: z
-      .string({
-        required_error: "'WHOLLY_GATEWAY_URL' environment variable is required",
-      })
-      .min(
-        7,
-        "'WHOLLY_GATEWAY_URL' environment variable must be at least 7 character(s)"
-      ),
-    env: z.enum(["development", "production", "staging", "testing"], {
-      required_error: "'NODE_ENV' environment variable is required",
-    }),
+      .string(required("WHOLLY_GATEWAY_URL"))
+      .min(7, minimum("WHOLLY_GATEWAY_URL", 7)),
+    env: z.enum(
+      ["development", "production", "staging", "testing"],
+      required("NODE_ENV")
+    ),
   });
 
   get(key?: never): ReturnType<typeof this.schema.parse>;
