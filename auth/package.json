@@ -9,8 +9,11 @@
   "main": "index.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "dev": "pnpm build && nodemon",
-    "start": "pnpm build && node dist/auth/index.js"
+    "docker:up": "sudo docker compose up -d",
+    "docker:down": "sudo docker compose down",
+    "docker:ps": "sudo docker compose ps -a",
+    "dev": "pnpm build && pnpm docker:up && nodemon",
+    "start": "pnpm build && pnpm docker:up && node dist/auth/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
