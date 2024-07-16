@@ -4,6 +4,7 @@ import helmet from "helmet";
 import { EnvSchema } from "@lib/types";
 
 import { Config } from "@shared/core";
+import { errorHandler } from "@shared/utils";
 
 export class Application {
   port: number;
@@ -23,7 +24,10 @@ export class Application {
   routes() {
     this.setup();
 
-    this.app.get("/", (_req, res) => res.sendStatus(200));
+    this.app.get("/", (_req, _res) => {
+      throw new Error();
+    });
+    this.app.use(errorHandler);
 
     return this.app;
   }
