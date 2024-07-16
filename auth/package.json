@@ -14,7 +14,8 @@
     "prettier:fix": "prettier --ignore-path .gitignore node_modules --write \"./**/*.+(ts|json)\"",
     "start": "echo starting prod server",
     "test": "echo testing",
-    "test:watch": "echo testing in watch mode"
+    "test:watch": "echo testing in watch mode",
+    "prepare": "cd .. && husky install auth/.husky"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
@@ -45,8 +46,8 @@
   },
   "lint-staged": {
     "src/**/*.{ts,json}": [
-      "eslint src/**/*.ts",
-      "prettier --ignore-path .gitignore node_modules --write \"./**/*.+(ts|json)\"",
+      "pnpm prettier:fix",
+      "pnpm lint",
       "git add"
     ]
   },
