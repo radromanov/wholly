@@ -11,7 +11,7 @@
     "dev": "nodemon",
     "lint": "eslint src/**/*.ts",
     "prettier": "echo checking Prettier formatting",
-    "prettier:fix": "echo fixing Prettier formatting",
+    "prettier:fix": "prettier --ignore-path .gitignore node_modules --write \"./**/*.+(ts|json)\"",
     "start": "echo starting prod server",
     "test": "echo testing",
     "test:watch": "echo testing in watch mode"
@@ -27,15 +27,32 @@
     "@eslint/js": "^9.7.0",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.10",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
     "eslint": "^9.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
     "globals": "^15.8.0",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.3",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.16.1"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,json}": [
+      "pnpm lint",
+      "pnpm prettier:fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
