@@ -8,10 +8,10 @@
   "license": "MIT",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon",
-    "start": "echo starting prod server",
-    "test": "jest",
-    "test:watch": "echo testing in watch mode"
+    "dev": "NODE_ENV=development nodemon",
+    "start": "NODE_ENV=production echo starting prod server",
+    "test": "NODE_ENV=testing jest",
+    "test:watch": "NODE_ENV=testing echo testing in watch mode"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

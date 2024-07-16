@@ -1,4 +1,5 @@
 import express, { Express } from "express";
+import helmet from "helmet";
 
 export class Application {
   port: number;
@@ -10,6 +11,7 @@ export class Application {
   }
 
   private setup() {
+    this.app.use(helmet())
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
