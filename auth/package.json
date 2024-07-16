@@ -45,8 +45,8 @@
   },
   "lint-staged": {
     "src/**/*.{ts,json}": [
-      "pnpm lint",
-      "pnpm prettier:fix",
+      "eslint src/**/*.ts",
+      "prettier --ignore-path .gitignore node_modules --write \"./**/*.+(ts|json)\"",
       "git add"
     ]
   },
