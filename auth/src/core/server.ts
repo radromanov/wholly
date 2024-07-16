@@ -1,4 +1,4 @@
-import { Application } from "./Application";
+import { Application } from "./application";
 
 export class Server {
   constructor(private readonly application: Application) {}
@@ -7,7 +7,7 @@ export class Server {
     port = port || this.application.port;
 
     return this.application.app.listen(port, () =>
-      console.log(`Auth Microservice running on port ${port}`),
+      console.log(`Auth Microservice running on port ${port}`)
     );
   }
 }

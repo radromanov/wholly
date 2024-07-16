@@ -1,6 +1,7 @@
-import { Application } from "@core/Application";
+import { Application } from "@core/application";
+import { authConfig } from "@lib/utils";
 
-const app = new Application();
+const app = new Application(authConfig);
 
 const endpoints = app.routes();
 

@@ -11,16 +11,6 @@
     "skipLibCheck": true,
     "moduleResolution": "node16",
 
-    "rootDirs": ["./", "../shared"],
-    "outDir": "./dist",
-    "baseUrl": "./src",
-    "paths": {
-      "@api/*": ["./api/*"],
-      "@core/*": ["./core/*"],
-      "@lib/*": ["./lib/*"],
-      "@shared/*": ["../../shared/*"]
-    },
-
     "inlineSourceMap": true,
     "forceConsistentCasingInFileNames": true,
 

@@ -35,6 +35,8 @@
   },
   "_moduleAliases": {
     "@api": "./src/api",
-    "@core": "./src/core"
+    "@core": "./src/core",
+    "@lib": "./src/lib",
+    "@shared": "../shared"
   }
 }

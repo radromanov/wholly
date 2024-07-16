@@ -1,17 +1,21 @@
 import express, { Express } from "express";
 import helmet from "helmet";
 
+import { EnvSchema } from "@lib/types";
+
+import { Config } from "@shared/core";
+
 export class Application {
   port: number;
   private _app: Express;
 
-  constructor() {
-    this.port = 3001;
+  constructor(private readonly config: Config<EnvSchema>) {
+    this.port = parseInt(this.config.get("PORT"), 10);
     this._app = express();
   }
 
   private setup() {
-    this.app.use(helmet())
+    this.app.use(helmet());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
