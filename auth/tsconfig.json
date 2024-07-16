@@ -11,10 +11,13 @@
     "skipLibCheck": true,
     "moduleResolution": "node16",
 
-    "rootDir": "./src",
+    "rootDir": "./",
     "outDir": "./dist",
     "baseUrl": "./src",
-    "paths": {},
+    "paths": {
+      "@api/*": ["./api/*"],
+      "@core/*": ["./core/*"]
+    },
 
     "inlineSourceMap": true,
     "forceConsistentCasingInFileNames": true,
@@ -26,5 +29,5 @@
     "noUncheckedIndexedAccess": true,
     "incremental": true
   },
-  "exclude": ["node_modules", "tests", "dist"]
+  "exclude": ["node_modules", "dist"]
 }

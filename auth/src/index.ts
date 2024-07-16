@@ -1,9 +1,7 @@
-import express from "express";
+import "module-alias/register";
+import { Server } from "@core/Server";
+import { app } from "@api/app";
 
-const app = express();
+const server = new Server(app);
 
-console.log("Testing if husky config works");
-
-app.listen(3001, () =>
-  console.log(`Auth Microservice running on port ${3001}`),
-);
+server.listen();
