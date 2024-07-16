@@ -1,0 +1,1 @@
+export const UNPROCESSABLE_ENTITY_STATUS = 422;
