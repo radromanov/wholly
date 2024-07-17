@@ -1,1 +1,0 @@
-export const METHOD_NOT_ALLOWED_STATUS = 405;

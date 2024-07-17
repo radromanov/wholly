@@ -1,6 +1,6 @@
 import z, { ZodError } from "zod";
 import { Request, Response, NextFunction } from "express";
-import { InternalServerError, UnprocessableEntity } from "../errors";
+import { BadRequest, InternalServerError } from "../errors";
 import { BaseError } from "../core";
 
 export const validate =
@@ -14,7 +14,7 @@ export const validate =
       });
 
       if (!valid.success) {
-        throw new UnprocessableEntity(valid.error.errors[0]?.message);
+        throw new BadRequest(valid.error.errors[0]?.message);
       }
 
       // Updating the request if transformations have taken place during validation
