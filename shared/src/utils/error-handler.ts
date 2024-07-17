@@ -15,7 +15,7 @@ export const errorHandler = (
       status: 500,
       trace:
         process.env.NODE_ENV === "production"
-          ? "Nothing to see here"
+          ? null
           : error.stack || "Unknown stack trace",
     });
   }

@@ -1,6 +1,6 @@
 export abstract class BaseError extends Error {
   status: number;
-  trace: string;
+  trace: string | null;
 
   protected constructor(message: string, status: number) {
     super(message);
@@ -10,7 +10,7 @@ export abstract class BaseError extends Error {
     this.status = status;
     this.trace =
       process.env.NODE_ENV === "production"
-        ? "Nothing to see here"
+        ? null
         : this.stack || "Unknown stack trace";
   }
 
