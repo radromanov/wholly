@@ -1,4 +1,4 @@
-import { endpoints } from "@api/app";
+import { endpoints } from "@lib/utils";
 import supertest from "supertest";
 
 describe("Server Health Check", () => {
