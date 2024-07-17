@@ -37,6 +37,6 @@
     "@api": "./src/api",
     "@core": "./src/core",
     "@lib": "./src/lib",
-    "@shared": "../shared"
+    "@shared": "../shared/src"
   }
 }
