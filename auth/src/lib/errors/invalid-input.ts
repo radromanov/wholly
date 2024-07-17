@@ -7,5 +7,8 @@ import {
 export class InvalidInput extends BaseError {
   constructor(message = INVALID_INPUT_MESSAGE) {
     super(message, UNPROCESSABLE_ENTITY_STATUS);
+
+    Object.setPrototypeOf(this, InvalidInput.prototype);
+    Error.captureStackTrace(this, this.constructor);
   }
 }
