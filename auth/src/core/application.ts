@@ -1,19 +1,10 @@
 import express, { Express } from "express";
 import helmet from "helmet";
 
-import { EnvSchema } from "@lib/types";
-
-import { Config } from "@shared/core";
 import { errorHandler } from "@shared/utils";
 
 export class Application {
-  port: number;
-  private _app: Express;
-
-  constructor(private readonly config: Config<EnvSchema>) {
-    this.port = parseInt(this.config.get("PORT"), 10);
-    this._app = express();
-  }
+  constructor(private readonly app: Express) {}
 
   private setup() {
     this.app.use(helmet());
@@ -28,9 +19,5 @@ export class Application {
     this.app.use(errorHandler);
 
     return this.app;
-  }
-
-  get app() {
-    return this._app;
   }
 }

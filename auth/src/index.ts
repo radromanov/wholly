@@ -1,7 +1,5 @@
 import "module-alias/register";
 import { Server } from "@core/server";
-import { app } from "@api/app";
+import { authConfig, express } from "@lib/utils";
 
-const server = new Server(app);
-
-server.listen();
+new Server(express, authConfig).listen();
