@@ -11,7 +11,7 @@
     "dev": "NODE_ENV=development nodemon",
     "start": "NODE_ENV=production echo starting prod server",
     "test": "NODE_ENV=testing jest",
-    "test:watch": "NODE_ENV=testing echo testing in watch mode"
+    "test:watch": "NODE_ENV=testing jest --watch"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
