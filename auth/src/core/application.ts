@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import helmet from "helmet";
 
-import { errorHandler } from "@shared/utils";
+import { errorHandler } from "@shared/middlewares";
 import { AppRoutes } from "@api/routes";
 import { ROUTES } from "@lib/constants";
 

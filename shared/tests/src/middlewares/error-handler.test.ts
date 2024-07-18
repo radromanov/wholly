@@ -1,7 +1,7 @@
 import request from "supertest";
 import express, { Request, Response, NextFunction } from "express";
 import { BaseError } from "../../../src/core";
-import { errorHandler } from "../../../src/utils";
+import { errorHandler } from "../../../src/middlewares";
 
 class MockError extends BaseError {
   constructor(message: string, status: number) {
