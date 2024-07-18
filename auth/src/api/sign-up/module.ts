@@ -16,9 +16,9 @@ export class SignupModule {
         "/",
         validate(SignupSchema),
         (req: Request<{}, {}, SignupInput>, res) => {
-          const { email } = req.body; // Email is valid and normalized
+          const { email, firstName, lastName } = req.body; // Email is valid and normalized
 
-          res.json({ email });
+          res.json({ email, firstName, lastName });
         }
       )
       .options("/", handleOptions(["POST", "OPTIONS"]))

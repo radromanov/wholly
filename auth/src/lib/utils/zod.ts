@@ -1,10 +1,10 @@
 import z from "zod";
 
 export const zodMessage = (
-  name: string,
+  fieldname: string,
   opts?: { min?: number; max?: number }
 ) => {
-  let message = `Please enter a valid ${name}`;
+  let message = `Please enter a valid ${fieldname}`;
 
   if (opts) {
     if (opts.min && !opts.max) {
@@ -19,9 +19,9 @@ export const zodMessage = (
   return message;
 };
 
-export const zodErrors = (name: string) => ({
-  required_error: zodMessage(name),
-  invalid_type_error: zodMessage(name),
+export const zodErrors = (fieldname: string) => ({
+  required_error: zodMessage(fieldname),
+  invalid_type_error: zodMessage(fieldname),
 });
 
 export const ZOD_EMAIL_DEFAULT = z
@@ -37,3 +37,26 @@ export const ZOD_EMAIL_DEFAULT = z
     const normalized = user + "@" + domain;
     return normalized;
   });
+
+export const ZOD_NOT_NULL_STRING_DEFAULT = (
+  fieldname: string,
+  opts?: { min?: number; max?: number }
+) => {
+  let builder = z.string(zodErrors(fieldname));
+
+  if (opts) {
+    if (opts.min && !opts.max) {
+      builder = builder.min(opts.min, zodMessage(fieldname, opts));
+    } else if (opts.max && !opts.min) {
+      builder = builder.max(opts.max, zodMessage(fieldname, opts));
+    } else if (opts.min && opts.max) {
+      builder = builder
+        .min(opts.min, zodMessage(fieldname, opts))
+        .max(opts.max, zodMessage(fieldname, opts));
+    }
+  } else {
+    builder = builder.min(1, zodMessage(fieldname, { min: 1 }));
+  }
+
+  return builder;
+};
