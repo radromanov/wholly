@@ -1,14 +1,4 @@
 import postgres, { Sql } from "postgres";
-import { Config } from "./config";
-import z from "zod";
-
-const envSchema = z.object({
-  POSTGRES_PORT: z.string(),
-  POSTGRES_HOST: z.string(),
-  POSTGRES_NAME: z.string(),
-  POSTGRES_USER: z.string(),
-  POSTGRES_PASSWORD: z.string(),
-});
 
 export class Database {
   private static instance: Database;
@@ -18,16 +8,8 @@ export class Database {
   private adminConnection: Sql<{}>;
 
   private constructor() {
-    const {
-      POSTGRES_USER,
-      POSTGRES_PASSWORD,
-      POSTGRES_HOST,
-      POSTGRES_PORT,
-      POSTGRES_NAME,
-    } = new Config(envSchema).get();
-
-    Database.url = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}`;
-    Database.adminUrl = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/postgres`;
+    Database.url = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_NAME}`;
+    Database.adminUrl = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/postgres`;
 
     this.connection = postgres(Database.url, { max: 1 });
     this.adminConnection = postgres(Database.adminUrl, { max: 1 });
