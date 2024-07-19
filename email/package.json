@@ -1,0 +1,42 @@
+{
+  "name": "wholly-email",
+  "author": {
+    "name": "Radostin Romanov",
+    "url": "https://github.com/radromanov"
+  },
+  "description": "Email Microservice for WhollyⒸ",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon",
+    "start": "NODE_ENV=production echo starting prod server",
+    "test": "NODE_ENV=testing jest",
+    "test:watch": "NODE_ENV=testing jest --watch"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "nodemon": "^3.1.4",
+    "uuid": "^10.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/module-alias": "^2.0.4",
+    "@types/node": "^20.14.10",
+    "@types/supertest": "^6.0.2",
+    "@types/uuid": "^10.0.0",
+    "jest": "^29.7.0",
+    "jest-mock-extended": "^3.0.7",
+    "module-alias": "^2.2.3",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  },
+  "_moduleAliases": {
+    "@shared": "../shared/src"
+  }
+}

@@ -13,6 +13,8 @@ export class SignupController {
     const { email, firstName, lastName } = req.body; // Email is valid and normalized by validate middleware in sign-up.module
     const id = uuidv7();
 
+    // TODO Email Microservice sendVerificationEmailEvent()
+
     await this.service.createOne({ id, email, firstName, lastName });
 
     res.json({ email, firstName, lastName });
