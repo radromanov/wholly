@@ -1,15 +1,13 @@
-import { EmailApi } from "@lib/interfaces";
 import { EmailAdapterOptions, SendEmailOptions } from "@lib/types";
+import EmailAdapter from "./email.adapter";
 
-class NodemailerAdapter implements EmailApi {
-  private _isSandbox: boolean;
-
+class NodemailerAdapter extends EmailAdapter {
   constructor(options: EmailAdapterOptions) {
-    this._isSandbox = options.isSandbox;
+    super(options);
   }
 
   async sendEmail(options: SendEmailOptions): Promise<void> {
-    if (!this._isSandbox) {
+    if (!this.isSandbox) {
       // Production environment
       console.log("Sending nodemailer production email with opts:", options);
     } else {
