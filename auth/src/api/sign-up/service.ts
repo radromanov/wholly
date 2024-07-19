@@ -45,15 +45,4 @@ export class SignupService {
       }
     }
   };
-  deleteOne = async (id: string) => {
-    try {
-      await db.delete(usersTable).where(eq(usersTable.id, id));
-    } catch (error: any) {
-      if (error instanceof BaseError) {
-        throw error;
-      } else {
-        throw new InternalServerError(`DeleteOne Error: ${error?.message}`);
-      }
-    }
-  };
 }

@@ -1,4 +1,4 @@
-import "./dotenv";
+import "@shared/utils/dotenv";
 import { envSchema } from "@lib/types";
 import { Config } from "@shared/core";
 

@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { SignupModule, SignupService } from "./sign-up";
+import { SignupModule, SignupController, SignupService } from "./sign-up";
 import { ROUTES } from "@lib/constants";
-import { SignupController } from "./sign-up/controller";
 
 export class AppRoutes {
   private _router: Router;

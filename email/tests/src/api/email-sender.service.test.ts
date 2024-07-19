@@ -1,13 +1,15 @@
-import { IEmailSenderService } from "@api/email-sender";
-import { MockEmailService } from "../../utils";
-import MockEmailApi from "../../utils/email-api.mock";
+import "@shared/utils/dotenv";
+import { EmailSenderService, IEmailSenderService } from "@api/email-sender";
+import { NodemailerAdapter } from "@lib/adapters";
 
 describe("Email Sender Service", () => {
   let emailSender: IEmailSenderService;
 
   beforeEach(() => {
-    const emailApi = new MockEmailApi();
-    emailSender = new MockEmailService(emailApi);
+    const emailApi = new NodemailerAdapter({
+      isSandbox: process.env.NODE_ENV !== "production", // isSandbox === true if not in production
+    });
+    emailSender = new EmailSenderService(emailApi);
   });
 
   describe("Method Validation", () => {

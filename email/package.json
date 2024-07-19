@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon",
     "start": "NODE_ENV=production echo starting prod server",
-    "test": "NODE_ENV=testing jest",
-    "test:watch": "NODE_ENV=testing jest --watch"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
@@ -38,6 +38,7 @@
   },
   "_moduleAliases": {
     "@api": "./src/api",
+    "@lib": "./src/lib",
     "@shared": "../shared/src"
   }
 }

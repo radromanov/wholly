@@ -4,6 +4,7 @@ module.exports = {
   testEnvironment: "node",
   moduleNameMapper: {
     "^@api(.*)$": "<rootDir>/src/api$1",
+    "^@lib(.*)$": "<rootDir>/src/lib$1",
     "^@shared(.*)$": "<rootDir>/../shared/src$1",
   },
 };

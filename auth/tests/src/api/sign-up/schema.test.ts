@@ -1,4 +1,4 @@
-import { SignupSchema } from "@api/sign-up";
+import { SignupSchema } from "@api/sign-up/schema";
 import {
   FIRST_NAME_MAX_LENGTH,
   FIRST_NAME_MIN_LENGTH,

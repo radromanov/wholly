@@ -1,16 +1,5 @@
-import { config } from "dotenv";
-import path from "path";
+import "../../../src/utils/dotenv";
 import { Database } from "../../../src/core/database";
-
-config({
-  path: path.resolve(
-    process.env.NODE_ENV === "production"
-      ? ".env.production"
-      : process.env.NODE_DEV === "development"
-      ? ".env.development"
-      : ".env.testing"
-  ),
-});
 
 describe("Database connection", () => {
   let db: Database;
