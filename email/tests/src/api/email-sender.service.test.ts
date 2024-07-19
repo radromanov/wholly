@@ -6,19 +6,12 @@ describe("Email Sender Service", () => {
   let emailSender: IEmailSenderService;
 
   beforeEach(() => {
-    const emailApi = new NodemailerAdapter({
-      isSandbox: process.env.NODE_ENV !== "production", // isSandbox === true if not in production
-    });
+    const emailApi = new NodemailerAdapter();
     emailSender = new EmailSenderService(emailApi);
   });
 
   describe("Method Validation", () => {
-    const availableMethods = [
-      "activate",
-      "deactivate",
-      "sendEmail",
-      "isActive",
-    ];
+    const availableMethods = ["sendEmail"];
     availableMethods.forEach((method) => {
       it(`should contain ${method} method`, () => {
         expect(emailSender).toHaveProperty(method);
@@ -32,7 +25,7 @@ describe("Email Sender Service", () => {
         from: "wholly@noreply.com",
         to: "test@email.com",
         subject: "Mock Email",
-        body: "This is a mock email",
+        text: "This is a mock email",
       });
     });
   });

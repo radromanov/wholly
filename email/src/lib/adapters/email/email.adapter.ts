@@ -4,7 +4,7 @@ import { EmailAdapterOptions, SendEmailOptions } from "@lib/types";
 import { NotImplemented } from "@shared/errors";
 
 abstract class EmailAdapter implements EmailApi {
-  private _isSandbox: boolean;
+  private _isSandbox: boolean; // Used to determine current environment -- development/test or production
 
   protected constructor(options: EmailAdapterOptions) {
     this._isSandbox = options.isSandbox;

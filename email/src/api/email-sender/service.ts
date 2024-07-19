@@ -1,25 +1,10 @@
-import { IEmailApi, IEmailSenderService, SendEmailOpts } from "./types";
+import { SendEmailOptions } from "@lib/types";
+import { IEmailApi, IEmailSenderService } from "./types";
 
-class EmailSenderService implements IEmailSenderService, IEmailApi {
-  private _isActive: boolean;
+class EmailSenderService implements IEmailSenderService {
+  constructor(private readonly emailApi: IEmailApi) {}
 
-  constructor(private readonly emailApi: IEmailApi) {
-    this._isActive = false;
-  }
-
-  get isActive(): boolean {
-    return this._isActive;
-  }
-
-  activate(): void {
-    this._isActive = true;
-  }
-
-  deactivate(): void {
-    this._isActive = false;
-  }
-
-  async sendEmail(opts: SendEmailOpts): Promise<void> {
+  async sendEmail(opts: SendEmailOptions): Promise<void> {
     await this.emailApi.sendEmail(opts);
   }
 }
