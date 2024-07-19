@@ -37,6 +37,7 @@
     "typescript": "^5.5.3"
   },
   "_moduleAliases": {
+    "@api": "./src/api",
     "@shared": "../shared/src"
   }
 }
