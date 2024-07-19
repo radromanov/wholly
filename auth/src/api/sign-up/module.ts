@@ -1,12 +1,13 @@
-import { Request, Router } from "express";
-import { SignupInput, SignupSchema } from "./schema";
+import { Router } from "express";
+import { SignupSchema } from "./schema";
 import { handleOptions, methodNotImplementedHandler } from "@shared/utils";
-import { validate } from "@shared/middlewares";
+import { catcher, validate } from "@shared/middlewares";
+import { SignupController } from "./controller";
 
 export class SignupModule {
   private _router: Router;
 
-  constructor() {
+  constructor(private readonly controller: SignupController) {
     this._router = Router();
   }
 
@@ -15,11 +16,7 @@ export class SignupModule {
       .post(
         "/",
         validate(SignupSchema),
-        (req: Request<{}, {}, SignupInput>, res) => {
-          const { email, firstName, lastName } = req.body; // Email is valid and normalized
-
-          res.json({ email, firstName, lastName });
-        }
+        catcher(this.controller.handleCreateOne)
       )
       .options("/", handleOptions(["POST", "OPTIONS"]))
       .get("/", methodNotImplementedHandler)

@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { SignupModule } from "./sign-up";
+import { SignupModule, SignupService } from "./sign-up";
 import { ROUTES } from "@lib/constants";
+import { SignupController } from "./sign-up/controller";
 
 export class AppRoutes {
   private _router: Router;
@@ -10,7 +11,9 @@ export class AppRoutes {
   }
 
   get router() {
-    const signupModule = new SignupModule();
+    const signupService = new SignupService();
+    const signupController = new SignupController(signupService);
+    const signupModule = new SignupModule(signupController);
 
     this._router.use(ROUTES.SIGNUP, signupModule.router);
 
