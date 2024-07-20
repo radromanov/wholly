@@ -1,5 +1,5 @@
-import { SendEmailInput } from "@lib/types";
+import { SendEmailOutput, SendEmailInput } from "@lib/types";
 
 export interface EmailApi {
-  sendEmail(options: SendEmailInput): Promise<void>;
+  sendEmail(options: SendEmailInput): Promise<SendEmailOutput>;
 }

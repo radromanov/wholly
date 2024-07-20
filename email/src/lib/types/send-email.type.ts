@@ -25,4 +25,4 @@ export const SendEmailOutputSchema = z.object({
 });
 
 export type SendEmailInput = z.infer<typeof SendEmailInputSchema>;
-export type SendEamilOutput = z.infer<typeof SendEmailOutputSchema>;
+export type SendEmailOutput = z.infer<typeof SendEmailOutputSchema>;

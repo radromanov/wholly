@@ -1,8 +1,9 @@
-import { SendEamilOutput, SendEmailInput } from "@lib/types";
+import { EmailApi } from "@lib/interfaces";
+import { SendEmailOutput, SendEmailInput } from "@lib/types";
 import { ServiceUnavailable } from "@shared/errors";
 
-class EmailSenderService {
-  private isActive = false;
+class EmailSenderService implements EmailApi {
+  private emailApi: EmailApi | undefined = undefined;
   private static instance: EmailSenderService;
 
   private constructor() {}
@@ -15,20 +16,27 @@ class EmailSenderService {
     return this.instance;
   }
 
-  deactivate() {
-    console.log(this.isActive);
-    this.isActive = false;
+  setEmailApi(api: EmailApi) {
+    this.emailApi = api;
   }
 
-  async sendEmail(options: SendEmailInput): Promise<SendEamilOutput> {
-    if (!this.isActive) {
-      throw new ServiceUnavailable("Email Sender Service is unavailable");
+  async sendEmail(options: SendEmailInput): Promise<SendEmailOutput> {
+    if (!this.validateInstance()) {
+      throw new ServiceUnavailable(
+        "Email Sender Service is unavailable. Please ensure the Email API has been set before attempting to send an email."
+      );
     }
 
-    return {
-      to: options.to,
-      status: "success",
-    };
+    // We use ! as the emailApi instance has been validated
+    return await this.emailApi!.sendEmail(options);
+  }
+
+  private validateInstance() {
+    if (!this.emailApi) {
+      return false;
+    }
+
+    return true;
   }
 }
 
