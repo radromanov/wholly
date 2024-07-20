@@ -21,6 +21,10 @@ export const SendEmailInputSchema = z.object({
 });
 export const SendEmailOutputSchema = z.object({
   to: ZOD_EMAIL_DEFAULT,
+  text: ZOD_NOT_NULL_STRING_DEFAULT("Text", {
+    min: SEND_EMAIL_TEXT_MIN_LENGTH,
+    max: SEND_EMAIL_TEXT_MAX_LENGTH,
+  }),
   status: z.enum(["success", "fail"]),
 });
 

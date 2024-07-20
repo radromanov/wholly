@@ -54,7 +54,11 @@ describe("Nodemailer Adapter", () => {
       const response = await nodemailerAdapter.sendEmail(options);
 
       expect(nodemailerAdapter["isSandbox"]).toBe(true);
-      expect(response).toEqual({ to: options.to, status: "success" });
+      expect(response).toEqual({
+        to: options.to,
+        text: options.text,
+        status: "success",
+      });
     });
 
     it("should send an email preview in production environment", async () => {
@@ -64,7 +68,11 @@ describe("Nodemailer Adapter", () => {
       const response = await nodemailerAdapter.sendEmail(options);
 
       expect(nodemailerAdapter["isSandbox"]).toBe(false);
-      expect(response).toEqual({ to: options.to, status: "success" });
+      expect(response).toEqual({
+        to: options.to,
+        text: options.text,
+        status: "success",
+      });
     });
 
     it("should send an email preview in test environment", async () => {
@@ -74,7 +82,11 @@ describe("Nodemailer Adapter", () => {
       const response = await nodemailerAdapter.sendEmail(options);
 
       expect(nodemailerAdapter["isSandbox"]).toBe(true);
-      expect(response).toEqual({ to: options.to, status: "success" });
+      expect(response).toEqual({
+        to: options.to,
+        text: options.text,
+        status: "success",
+      });
     });
   });
 });

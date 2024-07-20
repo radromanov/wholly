@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const envSchema = z.object({
+export const EnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production", "staging"]),
   PORT: z.string().min(2),
   EMAIL_HOST: z.string(),
@@ -8,3 +8,5 @@ export const envSchema = z.object({
   EMAIL_USER: z.string(),
   EMAIL_PASS: z.string(),
 });
+
+export type EnvSchema = z.infer<typeof EnvSchema>;

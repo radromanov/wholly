@@ -35,6 +35,7 @@ class NodemailerAdapter extends EmailAdapter {
 
     return {
       to: options.to,
+      text: options.text,
       status: "success",
     };
   }
