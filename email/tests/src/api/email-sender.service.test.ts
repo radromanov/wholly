@@ -2,13 +2,7 @@ import "@shared/utils/dotenv";
 import { EmailSenderService } from "@api/email-sender";
 import { EmailApi } from "@lib/interfaces";
 import { SendEmailInput, SendEmailOutput } from "@lib/types";
-
-const mockSendEmail = jest.fn();
-class MockEmailApi implements EmailApi {
-  async sendEmail(_options: SendEmailInput): Promise<SendEmailOutput> {
-    return mockSendEmail(_options);
-  }
-}
+import { mockSendEmail, MockmailerAdapter } from "@lib/adapters";
 
 describe("Email Sender Service", () => {
   let emailSenderService: EmailSenderService;
@@ -51,7 +45,7 @@ describe("Email Sender Service", () => {
     let emailApi: EmailApi;
 
     beforeAll(() => {
-      emailApi = new MockEmailApi();
+      emailApi = new MockmailerAdapter(); // Used to mock the functionality to prevent unnecessary emails being sent
     });
 
     it("should set the email api", () => {
@@ -85,8 +79,8 @@ describe("Email Sender Service", () => {
       );
     });
 
-    it("should send an email if emailApi is set", async () => {
-      const emailApi = new MockEmailApi();
+    it("should send an email correctly if emailApi is set", async () => {
+      const emailApi = new MockmailerAdapter();
       emailSenderService.setEmailApi(emailApi);
 
       const sendEmailOutput: SendEmailOutput = {
