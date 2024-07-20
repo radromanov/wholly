@@ -1,18 +1,33 @@
 import "@shared/utils/dotenv";
 import { EmailSenderService } from "@api/email-sender";
 import { EmailApi } from "@lib/interfaces";
-import { NodemailerAdapter } from "@lib/adapters";
-import { SendEmailInput } from "@lib/types";
+import { SendEmailInput, SendEmailOutput } from "@lib/types";
+
+const mockSendEmail = jest.fn();
+class MockEmailApi implements EmailApi {
+  async sendEmail(_options: SendEmailInput): Promise<SendEmailOutput> {
+    return mockSendEmail(_options);
+  }
+}
 
 describe("Email Sender Service", () => {
-  let emailSenderInstance: EmailSenderService;
+  let emailSenderService: EmailSenderService;
 
   beforeEach(() => {
-    emailSenderInstance = EmailSenderService.getInstance();
+    emailSenderService = EmailSenderService.getInstance();
   });
 
   afterEach(() => {
-    emailSenderInstance["emailApi"] = undefined; // Reset the emailApi private variable
+    (EmailSenderService as any).instance = undefined; // Reset the instance to ensure a fresh state for each test
+    emailSenderService["emailApi"] = undefined; // Reset the emailApi private variable
+    mockSendEmail.mockReset(); // Reset mock call count
+  });
+
+  it("should get the same instance of EmailSenderService", () => {
+    const instance1 = EmailSenderService.getInstance();
+    const instance2 = EmailSenderService.getInstance();
+
+    expect(instance1).toBe(instance2);
   });
 
   describe("Method Validation", () => {
@@ -27,7 +42,7 @@ describe("Email Sender Service", () => {
 
     availableInstanceMethods.forEach((method) => {
       it(`should contain ${method} method`, () => {
-        expect(emailSenderInstance).toHaveProperty(method);
+        expect(emailSenderService).toHaveProperty(method);
       });
     });
   });
@@ -36,13 +51,21 @@ describe("Email Sender Service", () => {
     let emailApi: EmailApi;
 
     beforeAll(() => {
-      emailApi = new NodemailerAdapter();
+      emailApi = new MockEmailApi();
     });
 
     it("should set the email api", () => {
-      emailSenderInstance.setEmailApi(emailApi);
+      emailSenderService.setEmailApi(emailApi);
 
-      expect(emailSenderInstance["emailApi"]).toBeTruthy();
+      expect(emailSenderService["emailApi"]).toBe(emailApi);
+    });
+
+    it("should validate the instance correctly", () => {
+      emailSenderService.setEmailApi(emailApi);
+      expect((emailSenderService as any).validateInstance()).toBe(true);
+
+      emailSenderService.setEmailApi(undefined as unknown as EmailApi);
+      expect((emailSenderService as any).validateInstance()).toBe(false);
     });
   });
 
@@ -55,9 +78,7 @@ describe("Email Sender Service", () => {
     };
 
     it("should throw an error if emailApi is not set", async () => {
-      await expect(() =>
-        emailSenderInstance.sendEmail(options)
-      ).rejects.toThrow(
+      await expect(() => emailSenderService.sendEmail(options)).rejects.toThrow(
         expect.objectContaining({
           status: 503,
         })
@@ -65,15 +86,19 @@ describe("Email Sender Service", () => {
     });
 
     it("should send an email if emailApi is set", async () => {
-      const emailApi = new NodemailerAdapter();
-      emailSenderInstance.setEmailApi(emailApi);
+      const emailApi = new MockEmailApi();
+      emailSenderService.setEmailApi(emailApi);
 
-      const res = await emailSenderInstance.sendEmail(options);
+      const sendEmailOutput: SendEmailOutput = {
+        to: options.to,
+        status: "success",
+      };
+      mockSendEmail.mockResolvedValueOnce(sendEmailOutput);
 
-      expect(res).toHaveProperty("to");
-      expect(res).toHaveProperty("status");
-      expect(res.to).toBe(options.to);
-      expect(res.status).toBe("success");
+      const result = await emailSenderService.sendEmail(options);
+      expect(mockSendEmail).toHaveBeenCalledTimes(1);
+      expect(mockSendEmail).toHaveBeenCalledWith(options);
+      expect(result).toEqual(sendEmailOutput);
     });
   });
 });
