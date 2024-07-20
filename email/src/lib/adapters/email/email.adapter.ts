@@ -1,5 +1,5 @@
 import { EmailApi } from "@lib/interfaces";
-import { EmailAdapterOptions, SendEmailOptions } from "@lib/types";
+import { EmailAdapterOptions, SendEmailInput } from "@lib/types";
 
 import { NotImplemented } from "@shared/errors";
 
@@ -14,7 +14,7 @@ abstract class EmailAdapter implements EmailApi {
     return this._isSandbox;
   }
 
-  async sendEmail(_options: SendEmailOptions): Promise<void> {
+  async sendEmail(_options: SendEmailInput): Promise<void> {
     throw new NotImplemented(
       "sendEmail not implemented in parent class. Use derived/child class instead."
     );

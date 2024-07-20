@@ -4,7 +4,7 @@ import {
 } from "../constants";
 import { BaseError } from "../core";
 
-export class InternalServerError extends BaseError {
+export default class InternalServerError extends BaseError {
   constructor(message = INTERNAL_SERVER_ERROR_MESSAGE) {
     super(message, INTERNAL_SERVER_ERROR_STATUS);
     Error.captureStackTrace(this, this.constructor);

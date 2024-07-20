@@ -4,7 +4,7 @@ import {
 } from "../constants";
 import { BaseError } from "../core";
 
-export class UnprocessableEntity extends BaseError {
+export default class UnprocessableEntity extends BaseError {
   constructor(message = UNPROCESSABLE_ENTITY_MESSAGE) {
     super(message, UNPROCESSABLE_ENTITY_STATUS);
     Error.captureStackTrace(this, this.constructor);

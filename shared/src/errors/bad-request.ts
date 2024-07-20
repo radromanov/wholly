@@ -1,7 +1,7 @@
 import { BAD_REQUEST_MESSAGE, BAD_REQUEST_STATUS } from "../constants";
 import { BaseError } from "../core";
 
-export class BadRequest extends BaseError {
+export default class BadRequest extends BaseError {
   constructor(message = BAD_REQUEST_MESSAGE) {
     super(message, BAD_REQUEST_STATUS);
     Error.captureStackTrace(this, this.constructor);
