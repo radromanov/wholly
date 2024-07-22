@@ -11,8 +11,8 @@ export class Server {
   listen(port?: number) {
     port = port || parseInt(this.config.get("PORT"), 10);
 
-    return this.app.listen(port, () =>
-      console.log(`Email Microservice running on port ${port}`)
-    );
+    return this.app.listen(port, () => {
+      console.log(`Email Microservice running on port ${port}`);
+    });
   }
 }

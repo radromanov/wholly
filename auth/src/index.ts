@@ -1,5 +1,9 @@
 import "module-alias/register";
 import { Server } from "@core/server";
 import { authConfig, express } from "@lib/utils";
+import { Application } from "@core/application";
 
-new Server(express, authConfig).listen();
+const appInstance = new Application(express);
+const app = appInstance.routes(); // Get the configured Express app
+
+new Server(app, authConfig).listen();
