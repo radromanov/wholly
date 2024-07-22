@@ -32,5 +32,5 @@ export const SendEmailOutputSchema = z.object({
   }),
 });
 
-export type SendEmailInput = z.infer<typeof SendEmailInputSchema>;
-export type SendEmailOutput = z.infer<typeof SendEmailOutputSchema>;
+export type SendEmailInput = z.infer<typeof SendEmailInputSchema>["body"];
+export type SendEmailOutput = z.infer<typeof SendEmailOutputSchema>["body"];

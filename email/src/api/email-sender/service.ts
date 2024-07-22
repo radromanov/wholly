@@ -20,7 +20,7 @@ class EmailSenderService implements EmailApi {
     this.emailApi = api;
   }
 
-  async sendEmail(options: SendEmailInput): Promise<SendEmailOutput> {
+  sendEmail = async (options: SendEmailInput): Promise<SendEmailOutput> => {
     if (!this.validateInstance()) {
       throw new ServiceUnavailable(
         "Email Sender Service is unavailable. Please ensure the Email API has been set before attempting to send an email."
@@ -29,7 +29,7 @@ class EmailSenderService implements EmailApi {
 
     // We use ! as the emailApi instance has been validated
     return await this.emailApi!.sendEmail(options);
-  }
+  };
 
   private validateInstance() {
     if (!this.emailApi) {

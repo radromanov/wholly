@@ -1,21 +1,24 @@
 import { Router } from "express";
 import { handleOptions, methodNotImplementedHandler } from "@shared/utils";
-import { validate } from "@shared/middlewares";
+import { catcher, validate } from "@shared/middlewares";
 import { SendEmailInputSchema } from "@lib/types";
+
+import EmailSenderController from "./controller";
 
 class EmailSenderModule {
   private _router: Router;
 
-  constructor() {
+  constructor(private readonly controller: EmailSenderController) {
     this._router = Router();
   }
 
   get router() {
     this._router
-      .post("/", validate(SendEmailInputSchema), async (req, res) => {
-        console.log("Sending email", req.body);
-        res.sendStatus(200);
-      })
+      .post(
+        "/",
+        validate(SendEmailInputSchema),
+        catcher(this.controller.handleSendEmail)
+      )
       .options("/", handleOptions(["POST", "OPTIONS"]))
       .get("/", methodNotImplementedHandler)
       .put("/", methodNotImplementedHandler)
